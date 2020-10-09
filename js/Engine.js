@@ -8,6 +8,7 @@ class Engine {
     // We need the DOM element every time we create a new enemy so we
     // store a reference to it in a property of the instance.
     this.root = theRoot;
+
     // We create our hamburger.
     // Please refer to Player.js for more information about what happens when you create a player
     this.player = new Player(this.root);
@@ -31,7 +32,7 @@ class Engine {
     }
 
     let timeDiff = new Date().getTime() - this.lastFrame;
-
+    console.log(timeDiff);
     this.lastFrame = new Date().getTime();
     // We use the number of milliseconds since the last call to gameLoop to update the enemy positions.
     // Furthermore, if any enemy is below the bottom of our game, its destroyed property will be set. (See Enemy.js)
@@ -57,7 +58,7 @@ class Engine {
     // We check if the player is dead. If he is, we alert the user
     // and return from the method (Why is the return statement important?)
     if (this.isPlayerDead()) {
-      window.alert('Game over');
+      window.alert("Game over");
       return;
     }
 
@@ -68,6 +69,20 @@ class Engine {
   // This method is not implemented correctly, which is why
   // the burger never dies. In your exercises you will fix this method.
   isPlayerDead = () => {
-    return false;
+    let collision = false;
+
+    this.enemies.forEach((enemy) => {
+      // console.log(this.player.x, this.player.y, enemy.x, enemy.y);
+      // COLLSION DETECTION
+      if (
+        this.player.y < enemy.y + ENEMY_HEIGHT &&
+        this.player.x < enemy.x + ENEMY_WIDTH &&
+        this.player.x + PLAYER_WIDTH > enemy.x
+      ) {
+        collision = true;
+        console.log("*****collision");
+      }
+    });
+    return collision;
   };
 }
