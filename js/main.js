@@ -21,7 +21,28 @@ const keydownHandler = (event) => {
 };
 
 // We add an event listener to document. document the ancestor of all DOM nodes in the DOM.
-document.addEventListener("keydown", keydownHandler);
+let startButton = document.getElementById("startGame");
+startButton.style.position = "absolute";
+startButton.style.background =
+  "linear-gradient(to bottom right, #ff0000 0%, #ff9900 100%)";
+startButton.innerText = "START";
+startButton.style.border = "1px solid white";
+startButton.style.fontFamily = "Lato";
+startButton.style.color = "white";
+startButton.innerText = "START";
+startButton.style.borderRadius = "28px";
+startButton.style.fontSize = "16px";
+startButton.style.width = "100px";
+startButton.style.height = "50px";
+startButton.style.top = "150";
+startButton.style.left = "140";
+startButton.style.zIndex = "150";
 
-// We call the gameLoop method to start the game
-gameEngine.gameLoop();
+let startGame = (event) => {
+  gameEngine.gameLoop();
+  startButton.removeEventListener("click", startGame);
+  startButton.style.display = "none";
+};
+
+startButton.addEventListener("click", startGame);
+document.addEventListener("keydown", keydownHandler);
