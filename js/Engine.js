@@ -15,6 +15,9 @@ class Engine {
     // Initially, we have no enemies in the game. The enemies property refers to an array
     // that contains instances of the Enemy class
     this.enemies = [];
+
+    // adding BonusPts in the mix
+    this.bonuses = [];
     // We add the background image to the game
     addBackground(this.root);
   }
@@ -24,6 +27,7 @@ class Engine {
   //  - Detects a collision between the player and any enemy
   //  - Removes enemies that are too low from the enemies array
   gameLoop = () => {
+    backgroundAudio.play();
     // This code is to see how much time, in milliseconds, has elapsed since the last
     // time this method was called.
     // (new Date).getTime() evaluates to the number of milliseconds since January 1st, 1970 at midnight.
@@ -58,8 +62,9 @@ class Engine {
     // We check if the player is dead. If he is, we alert the user
     // and return from the method (Why is the return statement important?)
     if (this.isPlayerDead()) {
-      window.alert("Game over");
-
+      backgroundAudio.pause();
+      youLoseAudio.play();
+      window.alert(`Score = ${this.enemies.destroyed}`);
       return;
     }
 
@@ -71,7 +76,6 @@ class Engine {
   // the burger never dies. In your exercises you will fix this method.
   isPlayerDead = () => {
     let collision = false;
-    console.log(this.enemies.y);
 
     this.enemies.forEach((enemy) => {
       // console.log(this.player.x, this.player.y, enemy.x, enemy.y);

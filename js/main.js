@@ -19,7 +19,6 @@ const keydownHandler = (event) => {
     gameEngine.player.moveRight();
   }
 };
-
 // We add an event listener to document. document the ancestor of all DOM nodes in the DOM.
 let startButton = document.getElementById("startGame");
 startButton.style.position = "absolute";
@@ -29,19 +28,28 @@ startButton.innerText = "START";
 startButton.style.border = "1px solid white";
 startButton.style.fontFamily = "Lato";
 startButton.style.color = "white";
-startButton.innerText = "START";
+startButton.innerText = "Play";
 startButton.style.borderRadius = "28px";
 startButton.style.fontSize = "16px";
 startButton.style.width = "100px";
 startButton.style.height = "50px";
-startButton.style.top = "150";
-startButton.style.left = "140";
+startButton.style.top = "270";
+startButton.style.left = "280";
 startButton.style.zIndex = "150";
+
+let gameIntro = document.getElementById("gameIntro");
+gameIntro.classList.add("blink_me");
+
+gameIntro.style.position = "absolute";
+gameIntro.style.top = "40";
+gameIntro.style.left = "180";
+gameIntro.style.zIndex = "850";
 
 let startGame = (event) => {
   gameEngine.gameLoop();
   startButton.removeEventListener("click", startGame);
   startButton.style.display = "none";
+  gameIntro.style.display = "none";
 };
 
 startButton.addEventListener("click", startGame);

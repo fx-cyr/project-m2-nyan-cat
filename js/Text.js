@@ -17,16 +17,8 @@ class Text {
     root.appendChild(div);
 
     this.domElement = div;
-
-    this.startTime = new Date().getTime();
   }
 
-  showScore = () => {
-    let gameTime = new Date().getTime() - this.startTime;
-    let score = document.createElement("p");
-    score.innerText = `Score ${gameTime}`;
-    mainDiv.appendChild(score);
-  };
   // This method is used to update the text displayed in the DOM element
   update(txt) {
     this.domElement.innerText = txt;
