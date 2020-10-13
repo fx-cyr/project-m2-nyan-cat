@@ -41,8 +41,8 @@ startButton.style.borderRadius = "28px";
 startButton.style.fontSize = "16px";
 startButton.style.width = "100px";
 startButton.style.height = "50px";
-startButton.style.top = "270";
-startButton.style.left = "280";
+startButton.style.top = "320";
+startButton.style.left = "320";
 startButton.style.zIndex = "150";
 
 let gameIntro = document.getElementById("gameIntro");

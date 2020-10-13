@@ -19,5 +19,5 @@ const PLAYER_WIDTH = 75;
 const PLAYER_HEIGHT = 54;
 
 const MAX_BONUSES = 1;
-const BONUS_WIDTH = 75;
-const BONUS_HEIGHT = 109;
+const BONUS_WIDTH = 62;
+const BONUS_HEIGHT = 57;

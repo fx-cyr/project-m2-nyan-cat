@@ -17,7 +17,8 @@ class Engine {
     this.enemies = [];
 
     // adding BonusPts in the mix
-    // this.bonuses = [];
+    this.bonuses = [];
+    this.bonusEnabled = true;
 
     // Seetinf inital Score to 0
     this.score = 0;
@@ -39,12 +40,16 @@ class Engine {
     }
 
     let timeDiff = new Date().getTime() - this.lastFrame;
-    console.log(timeDiff);
     this.lastFrame = new Date().getTime();
     // We use the number of milliseconds since the last call to gameLoop to update the enemy positions.
     // Furthermore, if any enemy is below the bottom of our game, its destroyed property will be set. (See Enemy.js)
     this.enemies.forEach((enemy) => {
       enemy.update(timeDiff);
+    });
+
+    //BONUS GAMELOOP
+    this.bonuses.forEach((bonus) => {
+      bonus.update(timeDiff);
     });
 
     // We remove all the destroyed enemies from the array referred to by \`this.enemies\`.
@@ -60,6 +65,14 @@ class Engine {
       return !enemy.destroyed;
     });
 
+    this.bonuses = this.bonuses.filter((bonus) => {
+      if (bonus.destroyed === true) {
+        console.log("missedBonus");
+      }
+
+      return !bonus.destroyed;
+    });
+
     // We need to perform the addition of enemies until we have enough enemies.
     while (this.enemies.length < MAX_ENEMIES) {
       // We find the next available spot and, using this spot, we create an enemy.
@@ -68,28 +81,18 @@ class Engine {
       this.enemies.push(new Enemy(this.root, spot));
     }
 
-    //BONUS GAMELOOP
-    // this.bonuses.forEach((bonus) => {
-    //   bonus.update(timeDiff);
-    // });
+    while (this.bonuses.length < MAX_BONUSES) {
+      // We find the next available spot and, using this spot, we create an enemy.
+      // We add this enemy to the enemies array
+      const spot = nextBonusSpot(this.bonuses);
+      this.bonuses.push(new Bonus(this.root, spot));
+    }
 
-    // // We remove all the destroyed enemies from the array referred to by \`this.enemies\`.
-    // // We use filter to accomplish this.
-    // // Remember: this.enemies only contains instances of the Enemy class.
-    // this.bonuses = this.bonuses.filter((bonus) => {
-    //   if (bonus.destroyed === true) {
-    //   }
+    // We remove all the destroyed enemies from the array referred to by \`this.enemies\`.
+    // We use filter to accomplish this.
+    // Remember: this.enemies only contains instances of the Enemy class.
 
-    //   return !bonus.destroyed;
-    // });
-
-    // // We need to perform the addition of enemies until we have enough enemies.
-    // while (this.bonuses.length < MAX_BONUSES) {
-    //   // We find the next available spot and, using this spot, we create an enemy.
-    //   // We add this enemy to the enemies array
-    //   const spot = nextBonusSpot(this.bonuses);
-    //   this.bonuses.push(new Bonus(this.root, spot));
-    // }
+    // We need to perform the addition of enemies until we have enough enemies.
 
     //BONUS GAMELOOP ENDS
 
@@ -100,6 +103,11 @@ class Engine {
       youLoseAudio.play();
       window.alert(`GAME OVER! New score: ${this.score}.`);
       return;
+    }
+
+    if (this.isBonusHit()) {
+      bonusAudio.play();
+      this.score += 5;
     }
 
     // If the player is not dead, then we put a setTimeout to run the gameLoop in 20 milliseconds
@@ -124,5 +132,28 @@ class Engine {
       }
     });
     return collision;
+  };
+
+  isBonusHit = () => {
+    let bonusImpact = false;
+
+    this.bonuses.forEach((bonus) => {
+      // console.log(this.player.x, this.player.y, enemy.x, enemy.y);
+      // COLLSION DETECTION
+      if (
+        this.player.y < bonus.y + BONUS_HEIGHT &&
+        this.player.x < bonus.x + BONUS_WIDTH &&
+        this.player.x + PLAYER_WIDTH > bonus.x &&
+        this.bonusEnabled
+      ) {
+        bonusImpact = true;
+        this.bonusEnabled = false;
+        setTimeout(() => {
+          this.bonusEnabled = true;
+        }, 500);
+        console.log("*****bonus");
+      }
+    });
+    return bonusImpact;
   };
 }
