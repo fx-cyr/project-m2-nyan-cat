@@ -17,7 +17,10 @@ class Engine {
     this.enemies = [];
 
     // adding BonusPts in the mix
-    this.bonuses = [];
+    // this.bonuses = [];
+
+    // Seetinf inital Score to 0
+    this.score = 0;
     // We add the background image to the game
     addBackground(this.root);
   }
@@ -48,6 +51,10 @@ class Engine {
     // We use filter to accomplish this.
     // Remember: this.enemies only contains instances of the Enemy class.
     this.enemies = this.enemies.filter((enemy) => {
+      if (enemy.destroyed === true) {
+        this.score += 1;
+      }
+
       return !enemy.destroyed;
     });
 
@@ -59,12 +66,37 @@ class Engine {
       this.enemies.push(new Enemy(this.root, spot));
     }
 
+    //BONUS GAMELOOP
+    // this.bonuses.forEach((bonus) => {
+    //   bonus.update(timeDiff);
+    // });
+
+    // // We remove all the destroyed enemies from the array referred to by \`this.enemies\`.
+    // // We use filter to accomplish this.
+    // // Remember: this.enemies only contains instances of the Enemy class.
+    // this.bonuses = this.bonuses.filter((bonus) => {
+    //   if (bonus.destroyed === true) {
+    //   }
+
+    //   return !bonus.destroyed;
+    // });
+
+    // // We need to perform the addition of enemies until we have enough enemies.
+    // while (this.bonuses.length < MAX_BONUSES) {
+    //   // We find the next available spot and, using this spot, we create an enemy.
+    //   // We add this enemy to the enemies array
+    //   const spot = nextBonusSpot(this.bonuses);
+    //   this.bonuses.push(new Bonus(this.root, spot));
+    // }
+
+    //BONUS GAMELOOP ENDS
+
     // We check if the player is dead. If he is, we alert the user
     // and return from the method (Why is the return statement important?)
     if (this.isPlayerDead()) {
       backgroundAudio.pause();
       youLoseAudio.play();
-      window.alert(`Score = ${this.enemies.destroyed}`);
+      window.alert(`GAME OVER! New score: ${this.score * 1000}.`);
       return;
     }
 

@@ -44,4 +44,22 @@ class Player {
     }
     this.domElement.style.left = `${this.x}px`;
   }
+
+  moveUp() {
+    moveAudio.currentTime = 0;
+    moveAudio.play();
+    if (this.y > 0) {
+      this.y = this.y - PLAYER_HEIGHT;
+    }
+
+    this.domElement.style.top = `${this.y}px`;
+  }
+
+  moveDown() {
+    moveAudio.play();
+    if (this.y + PLAYER_HEIGHT < GAME_HEIGHT) {
+      this.y = this.y + PLAYER_HEIGHT;
+    }
+    this.domElement.style.top = `${this.y}px`;
+  }
 }

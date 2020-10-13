@@ -21,13 +21,13 @@ class Bonus {
 
     // The x position of the enemy is determined by its width and its spot. We need this information for the lifetime
     // of the instance, so we make it a property of the instance. (Why is this information needed for the lifetime of the instance?)
-    this.x = bonusSpot * ENEMY_WIDTH;
+    this.x = bonusSpot * BONUS_WIDTH;
 
     // The y position is initially less than 0 so that the enemies fall from the top. This data is stored as a property
     // of the instance since it is needed throughout its lifetime. The destroyed property will indicate whether this enemy
     // is still in play. It is set to true whenever the enemy goes past the bottom of the screen.
     // It is used in the Engine to determine whether or not an enemy is in a particular column.
-    this.y = -ENEMY_HEIGHT;
+    this.y = -BONUS_HEIGHT;
     this.destroyed = false;
 
     // We create a new DOM element. The tag of this DOM element is img. It is the DOM node that will display the enemy image
