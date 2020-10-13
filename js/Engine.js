@@ -52,6 +52,8 @@ class Engine {
     // Remember: this.enemies only contains instances of the Enemy class.
     this.enemies = this.enemies.filter((enemy) => {
       if (enemy.destroyed === true) {
+        let displayScore = document.getElementById("scoreBoard");
+        displayScore.innerText = `SCORE: ${this.score}`;
         this.score += 1;
       }
 
@@ -96,7 +98,7 @@ class Engine {
     if (this.isPlayerDead()) {
       backgroundAudio.pause();
       youLoseAudio.play();
-      window.alert(`GAME OVER! New score: ${this.score * 1000}.`);
+      window.alert(`GAME OVER! New score: ${this.score}.`);
       return;
     }
 
